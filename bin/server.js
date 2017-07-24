@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env nodejs
 
 /**
  * Module dependencies.
@@ -6,19 +6,38 @@
 
 const express = require('express');
 const fs = require('fs');
-const hostname = '127.0.0.1';
-const port = 3000;
+
+/** 
+ * Set working directory...
+ */
+process.chdir(__dirname+"/..");
+
+/**
+ *
+ */
+const config = require('../cfg/config');
+
 const app = express();
 
-var cache = []; // Array is OK!
-cache[0] = fs.readFileSync( '/Users/fla/Documents/workspace/python/fiware-tempest-rally/result/output.html');
+// No need to cache
+// var cache
+
+app.use('/public', express.static('public'));
 
 app.get('/', function (req, res) {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.send( cache[0] );
+    res.contentType('text/html');
+    res.writeHead(200);
+    res.end( fs.readFileSync( 'public/index.html' ));
 });
 
-app.listen(port, function () {
-    console.log('\nServer is running at http://' + hostname + ':' + port + '' +
-        '\nServer hostname ' + hostname + ' is listening on port ' + port + '!');
+app.get('/region', function (req, res) {
+    res.contentType('application/json');
+    res.writeHead(200);
+    data={'url': config.regions[req.query.id]};
+    res.end(JSON.stringify(data));
+});
+
+app.listen(config.port, config.listen, function () {
+    console.log('\nServer is running at http://' + config.listen + ':' + config.port + '' +
+        '\nServer hostname ' + config.listen + ' is listening on port ' + config.port + '!');
 });

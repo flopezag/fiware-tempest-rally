@@ -1,0 +1,32 @@
+html, body {
+  font-family: sans-serif;
+  height: 100%;
+}
+
+#krtcontent {
+   width: 100%;
+   height: 100%
+}
+
+#krtleft_menu {
+   border: 1px solid #000fff;
+   background-color: ##fcf8e3;
+   padding: .5em;
+   float: left;
+   height: 2%;
+   width: 99%;
+ /*  auto: 100%;*/
+   display: block;
+   overflow: auto;
+}
+
+#krtdata_area {
+   display: block;
+/*   border: 4px solid #ffaa77;
+   background-color: #ffee88; 
+   padding: .5em;*/
+   float: left;
+   height: 50%;
+   width: 99%;
+   overflow: auto;
+}
