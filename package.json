@@ -1,0 +1,26 @@
+{
+  "name": "fiware-tempest-rally",
+  "version": "1.0.0",
+  "description": "Server to publish the HTML result of Tempest+Ralli",
+  "main": "server.js",
+  "scripts": {
+    "start": "node ./bin/server.js",
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flopezag/fiware-tempest-rally.git"
+  },
+  "author": "Fernando López Aguilar",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/flopezag/fiware-tempest-rally/issues"
+  },
+  "homepage": "https://github.com/flopezag/fiware-tempest-rally#readme",
+  "dependencies": {
+    "express": "4.15.2"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.4"
+  }
+}

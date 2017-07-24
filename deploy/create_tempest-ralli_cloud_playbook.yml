@@ -1,0 +1,22 @@
+---
+
+- hosts: localhost
+  connection: local
+  vars_files:
+    - vars/main.yml
+  tasks:
+  - name: Create a new Tempest+Ralli instance
+    os_server:
+      state: "{{ instance_state }}"
+      name: "{{ servername }}"
+      image: 2a9630d7-2328-4bbd-bbe7-e125c7008558
+      key_name: "{{ key_name }}"
+      timeout: 200
+      flavor: 3
+      network: "{{ network_internal_name }}"
+      security_groups: "{{ secgroup }}"
+      floating_ip_pools: "{{ network_external_name }}"
+      meta:
+        hostname: "{{ hostname }}"
+        ansible_host_groups: tempest-ralli
+    register: tempest-ralli

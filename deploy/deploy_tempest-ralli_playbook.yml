@@ -1,0 +1,65 @@
+---
+# ------------------------
+# Deploy the general stuff
+# ------------------------
+- hosts: "{{ hostname }}"
+  become: yes
+  # strategy: debug
+
+  vars_files:
+    - vars/main.yml
+ 
+  pre_tasks:
+    - name: Update APT cache
+      apt: update_cache=yes
+
+  tasks:
+    # General tasks
+    - name: install virtualenv
+      apt: name=python-virtualenv state=present update_cache=yes
+
+    - name: disable net.ipv6.conf.all.disable_ipv6
+      sysctl: name=net.ipv6.conf.all.disable_ipv6 value=1 state=present
+
+    - name: disable net.ipv6.conf.default.disable_ipv6
+      sysctl: name=net.ipv6.conf.default.disable_ipv6 value=1 state=present
+ 
+    - name: disable net.ipv6.conf.lo.disable_ipv6
+      sysctl: name=net.ipv6.conf.lo.disable_ipv6 value=1 state=present
+
+    - name: distribute host file
+      template: src=templates/hosts.j2 dest=/etc/hosts
+
+    # Install git and prerequisites
+    - name: Install git, libffi-dev, libpq-dev, libssl-dev, libxml2-dev, libxslt1-dev, python-dev
+      apt: name={{ item }} update_cache=yes state=latest
+      with_items:
+        - git
+        - libffi-dev
+        - libpq-dev
+        - libssl-dev
+        - libxml2-dev
+        - libxslt1-dev
+        - python-dev
+
+    # Install Tempest+Ralli
+    - name: get install_rally.sh script
+      get_url: url=https://raw.githubusercontent.com/openstack/rally/master/install_rally.sh dest=/home/ubuntu/install_rally.sh mode=0764
+
+    - name: execute install_rally.sh script
+      command: /home/ubuntu/install_rally.sh
+
+    - name: set up the Rally database
+      command: rally-manage db recreate
+
+    # Setting up the environment
+    - name: distribute your cloud credentials into a JSON configuration file
+      template: src=templates/existing.json.j2 dest=/home/ubuntu/existing.json mode=0666
+
+    # Registering an OpenStack deployment in Rally
+    - name: register an OpenStack deployment in Rally
+      command: rally deployment create --file=existing.json --name=existing
+
+    - name: register default deployment
+      command: rally deployment use existing
+

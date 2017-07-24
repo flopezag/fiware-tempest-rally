@@ -81,9 +81,25 @@ celerybeat-schedule
 # virtualenv
 venv/
 ENV/
+deploy/env
 
-# Spyder project settings
+# Spyder project config
 .spyderproject
 
-# Rope project settings
+# Rope project config
 .ropeproject
+
+# IDE
+.idea
+
+# OpenStack description file
+deploy/.openrc
+
+# Keypairs
+deploy/*.pem
+
+# Temporal ansible files
+deploy/*.retry
+
+# Node modules
+node_modules

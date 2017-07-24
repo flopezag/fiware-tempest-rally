@@ -1,0 +1,36 @@
+---
+# Set to absent to take down machines
+instance_state: present
+
+# The name of the key pair you will use to log in
+# as set in OpenStack (see the OpenStack security dashboard)
+key_name: tempest-ralli
+
+# Id of the networks to run in (can be found in the OpenStack
+# dashboard)
+network_internal_name: node-int-net-01
+network_external_name: public-ext-net-01
+
+# Name of the user used to install everything
+# on the remote systems
+user: ubuntu
+
+# Name of the security group used in the creation of the instance
+secgroup: tempest-ralli,default
+
+# Hostname
+hostname: tempest-ralli
+
+# Server name
+servername: tempest-ralli
+
+# Identity service in the FIWARE Lab node
+# Data should be taken from the .openrc file except the
+# administrator credentials
+auth_url: <keystone server url>
+region_name: <region name>
+username: <admin user name>
+password: <admin password>
+project_name: <admin project name>
+user_domain_name: <user domain name>
+project_domain_name: <project domain name>
