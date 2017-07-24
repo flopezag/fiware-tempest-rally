@@ -21,9 +21,8 @@ const hostname = '0.0.0.0';
 const port = 3000;
 const app = express();
 
-var cache
-// cache = fs.readFileSync( '/tmp/output.html' );
-cache = fs.readFileSync( 'public/index.html' );
+// No need to cache
+// var cache
 
 app.use('/public', express.static('public'));
 
