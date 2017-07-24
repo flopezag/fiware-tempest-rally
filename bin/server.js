@@ -17,8 +17,6 @@ process.chdir(__dirname+"/..");
  */
 const config = require('../cfg/config');
 
-const hostname = '0.0.0.0';
-const port = 3000;
 const app = express();
 
 // No need to cache
@@ -39,7 +37,7 @@ app.get('/region', function (req, res) {
     res.end(JSON.stringify(data));
 });
 
-app.listen(port, function () {
-    console.log('\nServer is running at http://' + config.liten + ':' + config.port + '' +
+app.listen(config.port, config.listen, function () {
+    console.log('\nServer is running at http://' + config.listen + ':' + config.port + '' +
         '\nServer hostname ' + config.listen + ' is listening on port ' + config.port + '!');
 });
