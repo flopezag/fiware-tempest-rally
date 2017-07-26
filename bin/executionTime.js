@@ -61,7 +61,7 @@ function List() {
 
   /**
    * Extract the head of the list and reotganize the List.
-   * @return {[type]} Head of the current List.
+   * @return  Head of the current List.
    */
   this.get = function() {
     var value = this.head
@@ -91,14 +91,14 @@ function Node(head, tail) {
 /**
  * Calculate the difference between two dates in format of
  * d, h, m, s, taking into account the inbformation that it
- * sends to the function.
- * @param       list1 List of scale division to past from
- *                    miliseconds to seconds, minutes, hours and
- *                    days.
- * @param       list2 List that contains the different values
- *                    in seconds, minutes, hours and days. The
- *                    initial value of the List if the different
- *                    between two dates in miliseconds.
+ * sends to the function. First calling function.
+ * @param  {List}  list1 List of scale division to past from
+ *                       miliseconds to seconds, minutes, hours and
+ *                       days.
+ * @param  {List}  list2 List that contains the different values
+ *                       in seconds, minutes, hours and days. The
+ *                       initial value of the List if the different
+ *                       between two dates in miliseconds.
  * @constructor
  */
 function Calculate(list1, list2) {
@@ -107,22 +107,41 @@ function Calculate(list1, list2) {
     var value1 = list1.get()
     var value2 = list2.get()
 
-    if ( value1 == 1000 ) {
-      var quotient = Number((value2/value1).toFixed(3));
+    var quotient = Number((value2/value1).toFixed(3));
 
-      list2.insert(quotient);
-    } else {
-      var quotient = Math.floor(value2 / value1);
-      var remainder = value2 % value1;
+    list2.insert(quotient);
 
-      list2.insert(remainder);
-      list2.insert(quotient);
-    }
-
-    return Calculate(list1, list2)
+    return CalculateNext(list1, list2)
   }
 }
 
+/**
+ * Calculate function for the rest of the case except
+ * the first one in the recursive operation of the algorithm.
+ * @param  {List}  list1 List of scale division to past from
+ *                       miliseconds to seconds, minutes, hours and
+ *                       days.
+ * @param  {List}  list2 List that contains the different values
+ *                       in seconds, minutes, hours and days. The
+ *                       initial value of the List if the different
+ *                       between two dates in miliseconds.
+ * @constructor
+ */
+function CalculateNext(list1, list2) {
+  if (list1.getHead() == null) { return list2; }
+  else {
+    var value1 = list1.get()
+    var value2 = list2.get()
+
+    var quotient = Math.floor(value2 / value1);
+    var remainder = value2 % value1;
+
+    list2.insert(remainder);
+    list2.insert(quotient);
+
+    return CalculateNext(list1, list2)
+  }
+}
 /**
  * Create and array in the way Ad, Bh, Cm, Ds with the translations
  * to all the miliseconds to seconds, minutes, hours and days.
@@ -155,11 +174,11 @@ executionTime.printData = function printData(timeDifference) {
 /**
  * Recursive function to get data from difference
  * and put it in the final string format.
- * @param  {List} list1 Numerical values in days, hours,
- *                      minutes and seconds.
- * @param  {List} list2 Char values corresponding to d, h, m, s.
- * @return {String}     Concatenation string with the data
- *                      of the previous two List.
+ * @param  {List}    list1 Numerical values in days, hours,
+ *                         minutes and seconds.
+ * @param  {List}    list2 Char values corresponding to d, h, m, s.
+ * @return {String}        Concatenation string with the data
+ *                         of the previous two List.
  */
 function printable(list1, list2) {
   if ( list1.getHead() == null ) return null;
