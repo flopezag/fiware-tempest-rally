@@ -63,15 +63,12 @@ app.get('/version', function (req, res) {
     datetime = datetime - config.date;
 
     var result = executionTime.printData(datetime);
-    console.log( config.version['FI-Health']['uptime'] )
 
     config.version['FI-Health']['uptime'] = result;
 
-    console.log( config.version['FI-Health'])
+    console.log( config.version )
 
-
-    // I need to change to content ot uptime...
-    res.end();
+    res.end(JSON.stringify(config.version));
 });
 
 app.listen(config.port, config.listen, function () {

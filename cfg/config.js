@@ -28,7 +28,11 @@ config.regions = {
 config.port = 3000;
 config.listen = '0.0.0.0';
 
-// doc should be a link to the API documentation in the gh-pages (*.github.io/)
+// doc should be a link to the API documentation in
+// the gh-pages (*.github.io/).
+// git_hash should be the hash of the last commit
+// from which we are taking the current version of
+// the code.that
 config.version = {
     'FI-Health': {
       'version': '1.0.0',
